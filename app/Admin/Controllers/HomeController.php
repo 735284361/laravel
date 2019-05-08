@@ -34,6 +34,6 @@ class HomeController extends Controller
 
     public function test()
     {
-        echo '12312';
+        echo '1231212';
     }
 }
