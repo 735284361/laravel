@@ -51,7 +51,7 @@ class WeChatController extends Controller
             // ...
         });
 
-        $app->broadcasting->sendText("大家好！欢迎使用 EasyWeChat。",['ovFDq1VUIzL6ed56AAnOMgAULXW0']);
+        $app->broadcasting->sendText("大家好！欢迎使用 EasyWeChat。",['ovFDq1VUIzL6ed56AAnOMgAULXW0','ovFDq1arj2lRv5WG-d8OzBb7OZqk']);
 
 
         return $app->server->serve();
