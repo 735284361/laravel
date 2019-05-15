@@ -35,7 +35,7 @@ class WeChatController extends Controller
         $this->app->server->push(function ($message) {
             switch ($message['MsgType']) {
                 case 'event':
-                    return '收到事件消息';
+                    return '收到事件消息'.base64_encode($message);
                     break;
                 case 'text':
                     return '收到文字消息';
@@ -178,6 +178,23 @@ class WeChatController extends Controller
         $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
 
         header('location:'. $targetUrl); // 跳转到 user/profile
+    }
+
+    public function jsskdConfig()
+    {
+       return $this->app->jssdk->buildConfig();
+    }
+
+    public function qrcode()
+    {
+        $result = $this->app->qrcode->temporary('foo', 6 * 24 * 3600);
+        $ticket = $result['ticket'];
+        $url = $this->app->qrcode->url($ticket);
+
+        $content = file_get_contents($url); // 得到二进制图片内容
+
+        file_put_contents(__DIR__ . '/code.jpg', $content); // 写入文件
+
     }
 
 }
