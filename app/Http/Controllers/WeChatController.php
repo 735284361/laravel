@@ -35,7 +35,7 @@ class WeChatController extends Controller
         $this->app->server->push(function ($message) {
             switch ($message['MsgType']) {
                 case 'event':
-                    return '收到事件消息'.base64_encode($message);
+                    return '收到事件消息'.$message['Content'];
                     break;
                 case 'text':
                     return '收到文字消息';
