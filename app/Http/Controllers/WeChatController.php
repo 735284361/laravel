@@ -36,7 +36,7 @@ class WeChatController extends Controller
             Log::info($message);
             switch ($message['MsgType']) {
                 case 'event':
-                    return '收到事件消息';
+                    return '收到事件消息'.$message['EventKey'];
                     break;
                 case 'text':
                     return '收到文字消息';
