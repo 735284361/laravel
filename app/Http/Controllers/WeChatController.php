@@ -188,7 +188,7 @@ class WeChatController extends Controller
 
     public function qrcode()
     {
-        $result = $this->app->qrcode->temporary('foo', 6 * 24 * 3600);
+        $result = $this->app->qrcode->temporary('test qrcode', 6 * 24 * 3600);
         $ticket = $result['ticket'];
         $url = $this->app->qrcode->url($ticket);
 
