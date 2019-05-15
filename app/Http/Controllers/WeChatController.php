@@ -166,11 +166,8 @@ class WeChatController extends Controller
 
     public function oauth_callback()
     {
-        $config = [
-            // ...
-        ];
 
-        $app = Factory::officialAccount($config);
+        $app = app('wechat.official_account');
         $oauth = $app->oauth;
 
         // 获取 OAuth 授权结果用户信息
