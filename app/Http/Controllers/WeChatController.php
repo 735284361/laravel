@@ -139,11 +139,14 @@ class WeChatController extends Controller
     {
 
 //        $app = Factory::officialAccount();
-        $config = [
-            // ...
-        ];
-        $app = Factory::officialAccount($config);
+//        $config = [
+//            // ...
+//        ];
+//        $app = Factory::officialAccount($config);
+        $app = app('wechat.official_account');
         $oauth = $app->oauth;
+//        $officialAccount = EasyWeChat::officialAccount(); // 公众号
+
 
 //        $oauth = $this->app->oauth();
 
