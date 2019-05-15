@@ -33,7 +33,7 @@ class WeChatController extends Controller
         Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
 
         $this->app->server->push(function ($message) {
-            Log::info(base64_decode($message));
+            Log::info($message);
             switch ($message['MsgType']) {
                 case 'event':
                     return '收到事件消息';
