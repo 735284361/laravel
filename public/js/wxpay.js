@@ -38,6 +38,7 @@ function callpay()
 
 function jsApiCall()
 {
+    alert(jsApiParameters)
     WeixinJSBridge.invoke(
         'getBrandWCPayRequest',
         jsApiParameters,
