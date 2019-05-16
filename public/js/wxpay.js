@@ -11,7 +11,7 @@ function pay()
         },
         dataType:'json',
         success:function(response){
-            jsApiParameters = response;
+            jsApiParameters = eval(response);
             callpay();
         },
         error:function(opts, response){
@@ -41,8 +41,6 @@ function jsApiCall()
         'getBrandWCPayRequest',
         jsApiParameters,
         function(res){
-            alert(1)
-            alert(jsApiParameters)
             WeixinJSBridge.log(res.err_msg);
             if(res.err_msg=='get_brand_wcpay_request:ok'){
                 alert("支付成功");
