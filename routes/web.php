@@ -22,6 +22,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::any('/wechat', 'WeChatController@serve');
 //Route::any('/testApi', 'WeChatController@testApi');
 
+Route::any('testApi/wxpay',function() {
+    return view('pay/wxpay');
+});
+
 //Route::any('testApi/{action}','WeChatController');
 Route::any('testApi/{action}', function(App\Http\Controllers\WeChatController $index, $action){
     return $index->$action();
