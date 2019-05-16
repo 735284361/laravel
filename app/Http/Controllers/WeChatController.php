@@ -216,7 +216,8 @@ class WeChatController extends Controller
         ]);
 
         $jssdk = $app->jssdk;
-        $json = $jssdk->bridgeConfig($result['prepay_id']);
+        $prepay_id = $result['prepay_id'];
+        $json = $jssdk->bridgeConfig($prepay_id);
         return $json;
     }
 
