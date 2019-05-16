@@ -11,7 +11,7 @@ function pay()
         },
         dataType:'json',
         success:function(response){
-            jsApiParameters = response;
+            jsApiParameters = eval("("+response+")");
             callpay();
         },
         error:function(opts, response){
