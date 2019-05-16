@@ -21,7 +21,6 @@ function pay()
 
 }
 
-
 function callpay()
 {
     if (typeof WeixinJSBridge == "undefined"){
@@ -38,11 +37,12 @@ function callpay()
 
 function jsApiCall()
 {
-    alert(jsApiParameters)
     WeixinJSBridge.invoke(
         'getBrandWCPayRequest',
         jsApiParameters,
         function(res){
+            alert(1)
+            alert(jsApiParameters)
             WeixinJSBridge.log(res.err_msg);
             if(res.err_msg=='get_brand_wcpay_request:ok'){
                 alert("支付成功");
