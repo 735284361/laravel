@@ -37,9 +37,16 @@ function callpay()
 
 function jsApiCall()
 {
+    var timestamp = Date.parse(new Date());
     WeixinJSBridge.invoke(
-        'getBrandWCPayRequest',
-        jsApiParameters,
+        'getBrandWCPayRequest', {
+            "appId":jsApiParameters.appid,
+            "timeStamp":timestamp,
+            "nonceStr":jsApiParameters.nonce_str,
+            "package":'prepay_id='+jsApiParameters.prepay_id,
+            "signType":"MD5",
+            "paySign":jsApiParameters.sign,
+        },
         function(res){
             var str = JSON.stringify(jsApiParameters);
             alert(str)
