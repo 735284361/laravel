@@ -12,10 +12,10 @@ class WeChatController extends Controller
 {
 
     protected $app;
-    protected $openId = 'ovFDq1VUIzL6ed56AAnOMgAULXW0';
+//    protected $openId = 'ovFDq1VUIzL6ed56AAnOMgAULXW0';
 
     // 互助社
-//    protected $openId = 'oAkD2v1aQM1aBTYV4OKeYg7ecHns';
+    protected $openId = 'oAkD2v1aQM1aBTYV4OKeYg7ecHns';
 //    protected $openIdList = ['oAkD2v1aQM1aBTYV4OKeYg7ecHns','oAkD2vzZo1agrwdTdheJHJ8V9_o8'];
 
     public function __construct()
@@ -195,6 +195,38 @@ class WeChatController extends Controller
         $content = file_get_contents($url); // 得到二进制图片内容
 
         file_put_contents(__DIR__ . '/code.jpg', $content); // 写入文件
+
+    }
+
+    public function auto_replay()
+    {
+        return $this->app->auto_reply->current();
+    }
+
+    public function wx_pay()
+    {
+        $app = app('wechat.payment');
+        $result = $app->order->unify([
+            'body' => '腾讯充值中心-QQ会员充值',
+            'out_trade_no' => time().round(100000,99999),
+            'total_fee' => 1,
+            'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
+            'openid' => $this->openId,
+        ]);
+
+        Log::info($result);
+
+        return $result;
+    }
+
+    public function wxpay_callback()
+    {
+        Log::info('wxpay_callback');
+        $app = app('wechat.payment');
+        $app->payment->handleNotify(function($notify, $successful){
+            Log::info($notify);
+            Log::info($successful);
+        });
 
     }
 
