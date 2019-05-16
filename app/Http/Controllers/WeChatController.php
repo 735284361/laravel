@@ -221,7 +221,6 @@ class WeChatController extends Controller
 
     public function wxpay_callback()
     {
-
         Log::info('wxpay_callback');
         $app = app('wechat.payment');
         $app->payment->handleNotify(function($notify, $successful){
