@@ -214,9 +214,9 @@ class WeChatController extends Controller
             'openid' => $this->openId,
         ]);
 
-        Log::info($result);
-
-        return $result;
+        $jssdk = $app->jssdk;
+        $json = $jssdk->bridgeConfig($result['prepay_id']);
+        return $json;
     }
 
     public function wxpay_callback()
