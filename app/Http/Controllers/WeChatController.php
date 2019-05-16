@@ -205,10 +205,11 @@ class WeChatController extends Controller
 
     public function wx_pay()
     {
+        $order_no = time().rand(100000,999999);
         $app = app('wechat.payment');
         $result = $app->order->unify([
             'body' => '腾讯充值中心-QQ会员充值',
-            'out_trade_no' => time().round(100000,99999),
+            'out_trade_no' => $order_no,
             'total_fee' => 101,
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $this->openId,
