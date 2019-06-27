@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use EasyWeChat\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Think\Db\Driver\Pdo;
 
 class WeChatController extends Controller
@@ -136,50 +138,39 @@ class WeChatController extends Controller
 //        return $list;
 //    }
 
-    public function login()
-    {
-
-//        $app = Factory::officialAccount();
-//        $config = [
-//            // ...
-//        ];
-//        $app = Factory::officialAccount($config);
-        $app = app('wechat.official_account');
-        $oauth = $app->oauth;
-//        $officialAccount = EasyWeChat::officialAccount(); // 公众号
-
-
-//        $oauth = $this->app->oauth();
-
-        // 未登录
-        if (empty($_SESSION['wechat_user'])) {
-
-            $_SESSION['target_url'] = 'user/profile';
-
-            return $oauth->redirect();
-            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-            // $oauth->redirect()->send();
-        }
-
-        // 已经登录过
-        $user = $_SESSION['wechat_user'];
-    }
-
-    public function oauth_callback()
-    {
-
-        $app = app('wechat.official_account');
-        $oauth = $app->oauth;
-
-        // 获取 OAuth 授权结果用户信息
-        $user = $oauth->user();
-
-        $_SESSION['wechat_user'] = $user->toArray();
-
-        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
-
-        header('location:'. $targetUrl); // 跳转到 user/profile
-    }
+//    public function login()
+//    {
+//        $app = app('wechat.official_account');
+//        $oauth = $app->oauth;
+//
+//        // 未登录
+//        if (empty($_SESSION['wechat_user'])) {
+//
+//            $_SESSION['target_url'] = 'user/profile';
+//
+//            return $oauth->redirect();
+//            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
+//            // $oauth->redirect()->send();
+//        }
+//
+//        // 已经登录过
+//        $user = $_SESSION['wechat_user'];
+//    }
+//
+//    public function oauth_callback()
+//    {
+//        $app = app('wechat.official_account');
+//        $oauth = $app->oauth;
+//
+//        // 获取 OAuth 授权结果用户信息
+//        $user = $oauth->user();
+//
+//        $_SESSION['wechat_user'] = $user->toArray();
+//
+//        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+//
+//        header('location:'. $targetUrl); // 跳转到 user/profile
+//    }
 
     public function jsskdConfig()
     {
@@ -230,6 +221,39 @@ class WeChatController extends Controller
             Log::info($successful);
         });
 
+    }
+
+    public function mini_login(Request $request)
+    {
+        $code = $request->input('code');
+        $app = app('wechat.mini_program');
+
+        $data = $app->auth->session($code);
+
+        $openId = $data['openid'];
+        //查看对应的openid是否已被注册
+        $userModel = User::where('openid', $openId)->first();
+        //如果未注册，跳转到注册
+        if (!$userModel) {
+            return ['code' => 10000];
+        } else {
+            //如果已被注册，通过openid进行自动认证，
+            //认证通过后重定向回原来的路由，这样就实现了自动登陆。
+            if(Auth::attempt(['openid' => $openId])) {
+                return redirect()->intended();
+            }
+        }
+    }
+
+
+    public function mini_register()
+    {
+        echo 1;
+    }
+
+    public function test()
+    {
+        echo Str::random(60);
     }
 
 }

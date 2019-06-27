@@ -99,4 +99,5 @@ return [
         'filter_placeholder' => '过滤',
     ],
     'menu_titles' => [],
+    'Created at'                => '创建时间',
 ];
