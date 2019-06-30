@@ -35,3 +35,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 Route::post('/user/wxapp/login', 'MiniAuthController@login');
 Route::post('/user/wxapp/register/complex', 'MiniAuthController@register');
 Route::get('/user/check-token', 'MiniAuthController@checkToken');
+
+
+//  商城
+
+Route::any('/config/get-value','Api\ConfigController@value');
