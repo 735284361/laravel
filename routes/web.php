@@ -51,3 +51,11 @@ Route::group(['middleware' => 'mock.user'], function () {//这个中间件可以
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/example', 'HomeController@index');
 });
+
+Route::get('publish', function () {
+    // Route logic...
+    Redis::publish('test-channel', json_encode(['foo' => 'bar']));
+});
+
+
+Route::any('test', 'WechatController@user_tag');

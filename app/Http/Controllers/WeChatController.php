@@ -109,21 +109,39 @@ class WeChatController extends Controller
         return $this->app->user_tag->list();
     }
 
-//    public function user_tag()
-//    {
-//        for ($i = 0; $i < 21; $i++) {
-//            $list = $this->getVipList($i);
-//            $this->app->user_tag->tagUsers($list, 112);
+    public function user_tag()
+    {
+//        for ($i = 0; $i < 10; $i++) {
+//            $list = $this->getUserCity($i);
+//            $this->app->user_tag->tagUsers($list, 119);
 //        }
+//        for ($i = 0; $i < 20; $i++) {
+//            $list = $this->getVipList($i);
+//            $this->app->user_tag->tagUsers($list, 120);
+//        }
+    }
+
+    public function test()
+    {
+        for ($i = 0; $i < 20; $i++) {
+            $list = $this->getVipList($i);
+            dump($list);
+        }
+    }
+
+
+//    public function getUserCity($offset)
+//    {
+//        $list = DB::table('user_info')
+//            ->leftJoin('users', 'user_info.uid', '=', 'users.uid')
+//            ->where('user_city','like','%北京%')
+//            ->offset($offset*20)->limit(20)->get()->toArray();
+//
+//        $list = array_column($list,'OpenID');
+//
+//        return $list;
 //    }
 //
-//    public function test()
-//    {
-//        for ($i = 0; $i < 21; $i++) {
-//            $list = $this->getVipList($i);
-//            dump($list);
-//        }
-//    }
 //
 //    public function getVipList($offset)
 //    {
@@ -251,9 +269,9 @@ class WeChatController extends Controller
         echo 1;
     }
 
-    public function test()
-    {
-        echo Str::random(60);
-    }
+//    public function test()
+//    {
+//        echo Str::random(60);
+//    }
 
 }
